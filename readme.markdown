@@ -1,6 +1,6 @@
 [![logo.png][3]][2]
 
-[![Travis CI][5]][4]
+[![Test Workflow][4]][5]
 [![Dependencies][6]][7]
 [![Dev Dependencies][17]][18]
 [![Patreon][19]][20]
@@ -315,8 +315,8 @@ MIT
 [1]: https://github.com/bevacqua/dragula/blob/master/resources/demo.png
 [2]: http://bevacqua.github.io/dragula/
 [3]: https://github.com/bevacqua/dragula/blob/master/resources/logo.png
-[4]: https://travis-ci.org/bevacqua/dragula
-[5]: https://travis-ci.org/bevacqua/dragula.svg
+[4]: https://github.com/wilsonge/dragula/actions/workflows/tests/badge.svg
+[5]: https://github.com/wilsonge/dragula/actions/workflows/tests.yml
 [6]: https://david-dm.org/bevacqua/dragula.svg
 [7]: https://david-dm.org/bevacqua/dragula
 [8]: https://github.com/bevacqua/angularjs-dragula
