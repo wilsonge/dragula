@@ -315,8 +315,8 @@ MIT
 [1]: https://github.com/bevacqua/dragula/blob/master/resources/demo.png
 [2]: http://bevacqua.github.io/dragula/
 [3]: https://github.com/bevacqua/dragula/blob/master/resources/logo.png
-[4]: https://github.com/wilsonge/dragula/actions/workflows/tests/badge.svg
-[5]: https://github.com/wilsonge/dragula/actions/workflows/tests.yml
+[4]: https://github.com/bevacqua/dragula/actions/workflows/tests/badge.svg
+[5]: https://github.com/bevacqua/dragula/actions/workflows/tests.yml
 [6]: https://david-dm.org/bevacqua/dragula.svg
 [7]: https://david-dm.org/bevacqua/dragula
 [8]: https://github.com/bevacqua/angularjs-dragula
