@@ -1,18 +1,17 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
 
 test('end does not throw when not dragging', function (t) {
   t.test('a single time', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.end();
     }, 'dragula ignores a single call to drake.end');
     st.end();
   });
   t.test('multiple times', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.end();
       drake.end();
@@ -28,7 +27,7 @@ test('when already dragging, .end() ends (cancels) previous drag', function (t) 
   var div = document.createElement('div');
   var item1 = document.createElement('div');
   var item2 = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item1);
   div.appendChild(item2);
   document.body.appendChild(div);
@@ -53,7 +52,7 @@ test('when already dragged, ends (drops) previous drag', function (t) {
   var div2 = document.createElement('div');
   var item1 = document.createElement('div');
   var item2 = document.createElement('div');
-  var drake = dragula([div, div2]);
+  var drake = window.dragula([div, div2]);
   div.appendChild(item1);
   div.appendChild(item2);
   document.body.appendChild(div);

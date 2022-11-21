@@ -1,11 +1,10 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
 
 test('drake has sensible default options', function (t) {
   var options = {};
-  dragula(options);
+  window.dragula(options);
   t.equal(typeof options.moves, 'function', 'options.moves defaults to a method');
   t.equal(typeof options.accepts, 'function', 'options.accepts defaults to a method');
   t.equal(typeof options.invalid, 'function', 'options.invalid defaults to a method');
