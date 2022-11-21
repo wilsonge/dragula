@@ -1,18 +1,18 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../dist/dragula');
 
 test('cancel does not throw when not dragging', function (t) {
   t.test('a single time', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.cancel();
     }, 'dragula ignores a single call to drake.cancel');
     st.end();
   });
   t.test('multiple times', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.cancel();
       drake.cancel();
@@ -27,7 +27,7 @@ test('cancel does not throw when not dragging', function (t) {
 test('when dragging and cancel gets called, nothing happens', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.start(item);
@@ -40,7 +40,7 @@ test('when dragging and cancel gets called, nothing happens', function (t) {
 test('when dragging and cancel gets called, cancel event is emitted', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.start(item);
@@ -62,7 +62,7 @@ test('when dragging a copy and cancel gets called, default does not revert', fun
   var div = document.createElement('div');
   var div2 = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div, div2]);
+  var drake = window.dragula([div, div2]);
   div.appendChild(item);
   document.body.appendChild(div);
   document.body.appendChild(div2);
@@ -87,7 +87,7 @@ test('when dragging a copy and cancel gets called, revert is executed', function
   var div = document.createElement('div');
   var div2 = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div, div2]);
+  var drake = window.dragula([div, div2]);
   div.appendChild(item);
   document.body.appendChild(div);
   document.body.appendChild(div2);

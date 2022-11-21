@@ -2,18 +2,17 @@
 
 var test = require('tape');
 var events = require('./lib/events');
-var dragula = require('..');
 
 test('remove does not throw when not dragging', function (t) {
   t.test('a single time', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.remove();
     }, 'dragula ignores a single call to drake.remove');
     st.end();
   });
   t.test('multiple times', function once (st) {
-    var drake = dragula();
+    var drake = window.dragula();
     st.doesNotThrow(function () {
       drake.remove();
       drake.remove();
@@ -28,7 +27,7 @@ test('remove does not throw when not dragging', function (t) {
 test('when dragging and remove gets called, element is removed', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.start(item);
@@ -41,7 +40,7 @@ test('when dragging and remove gets called, element is removed', function (t) {
 test('when dragging and remove gets called, remove event is emitted', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.start(item);
@@ -62,7 +61,7 @@ test('when dragging and remove gets called, remove event is emitted', function (
 test('when dragging a copy and remove gets called, cancel event is emitted', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div], { copy: true });
+  var drake = window.dragula([div], { copy: true });
   div.appendChild(item);
   document.body.appendChild(div);
   events.raise(item, 'mousedown', { which: 1 });

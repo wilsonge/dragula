@@ -2,7 +2,6 @@
 
 var test = require('tape');
 var events = require('./lib/events');
-var dragula = require('..');
 
 test('drag event gets emitted when clicking an item', function (t) {
   testCase('works for left clicks', { which: 1 });
@@ -22,7 +21,7 @@ test('drag event gets emitted when clicking an item', function (t) {
       var div = document.createElement('div');
       var item = document.createElement(o.tag || 'div');
       var passes = o.passes !== false;
-      var drake = dragula([div], o.dragulaOpts);
+      var drake = window.dragula([div], o.dragulaOpts);
       div.appendChild(item);
       document.body.appendChild(div);
       drake.on('drag', drag);
@@ -44,7 +43,7 @@ test('when already dragging, mousedown/mousemove ends (cancels) previous drag', 
   var div = document.createElement('div');
   var item1 = document.createElement('div');
   var item2 = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item1);
   div.appendChild(item2);
   document.body.appendChild(div);
@@ -76,7 +75,7 @@ test('when already dragged, ends (drops) previous drag', function (t) {
   var div2 = document.createElement('div');
   var item1 = document.createElement('div');
   var item2 = document.createElement('div');
-  var drake = dragula([div, div2]);
+  var drake = window.dragula([div, div2]);
   div.appendChild(item1);
   div.appendChild(item2);
   document.body.appendChild(div);
@@ -110,7 +109,7 @@ test('when copying, emits cloned with the copy', function (t) {
   var div = document.createElement('div');
   var item1 = document.createElement('div');
   var item2 = document.createElement('span');
-  var drake = dragula([div], { copy: true });
+  var drake = window.dragula([div], { copy: true });
   item2.innerHTML = '<em>the force is <strong>with this one</strong></em>';
   div.appendChild(item1);
   div.appendChild(item2);
@@ -139,7 +138,7 @@ test('when copying, emits cloned with the copy', function (t) {
 test('when dragging, element gets gu-transit class', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  dragula([div]);
+  window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   events.raise(item, 'mousedown', { which: 1 });
@@ -151,7 +150,7 @@ test('when dragging, element gets gu-transit class', function (t) {
 test('when dragging, body gets gu-unselectable class', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  dragula([div]);
+  window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   events.raise(item, 'mousedown', { which: 1 });
@@ -163,7 +162,7 @@ test('when dragging, body gets gu-unselectable class', function (t) {
 test('when dragging, element gets a mirror image for show', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   item.innerHTML = '<em>the force is <strong>with this one</strong></em>';
   div.appendChild(item);
   document.body.appendChild(div);
@@ -184,7 +183,7 @@ test('when dragging, mirror element gets appended to configured mirrorContainer'
   var mirrorContainer = document.createElement('div');
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div], {
+  var drake = window.dragula([div], {
     'mirrorContainer': mirrorContainer
   });
   item.innerHTML = '<em>the force is <strong>with this one</strong></em>';
@@ -203,7 +202,7 @@ test('when dragging, mirror element gets appended to configured mirrorContainer'
 test('when dragging stops, element gets gu-transit class removed', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   events.raise(item, 'mousedown', { which: 1 });
@@ -217,7 +216,7 @@ test('when dragging stops, element gets gu-transit class removed', function (t) 
 test('when dragging stops, body becomes selectable again', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
-  var drake = dragula([div]);
+  var drake = window.dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   events.raise(item, 'mousedown', { which: 1 });
@@ -233,7 +232,7 @@ test('when drag begins, check for copy option', function (t) {
   var item = document.createElement('div');
   item.className = 'copyable';
   div.className = 'contains';
-  var drake = dragula([div], {
+  var drake = window.dragula([div], {
     copy: checkCondition
   });
   item.innerHTML = '<em>the force is <strong>with this one</strong></em>';

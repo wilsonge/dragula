@@ -4,15 +4,15 @@ window.dragula = (initialContainers, options) => {
   if (options === undefined && Array.isArray(initialContainers) === false) {
     // eslint-disable-next-line no-param-reassign
     options = initialContainers;
-    // eslint-disable-next-line no-param-reassign
-    initialContainers = [];
-    // eslint-disable-next-line no-prototype-builtins
-  } else if (options !== undefined && options.hasOwnProperty('containers') === false && Array.isArray(initialContainers)) {
-    // eslint-disable-next-line no-param-reassign
-    options.containers = initialContainers;
-  } else {
-    // eslint-disable-next-line no-param-reassign
-    options = { containers: initialContainers };
+  } else if (Array.isArray(initialContainers)) {
+    if (options === undefined) {
+      // eslint-disable-next-line no-param-reassign
+      options = {};
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'containers') === false) {
+      // eslint-disable-next-line no-param-reassign
+      options.containers = initialContainers;
+    }
   }
 
   const dragulaObject = new Dragula(options);
