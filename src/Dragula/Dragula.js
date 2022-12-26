@@ -6,6 +6,11 @@ import * as classes from '../classes';
 const doc = document;
 const { documentElement } = doc;
 
+/**
+ * Get parent of the element. If parent is the root document then null is returned
+ * @param   el  {Node}
+ * @returns {ParentNode|null}
+ */
 function getParent(el) { return el.parentNode === doc ? null : el.parentNode; }
 
 function getImmediateChild(dropTarget, target) {
@@ -19,6 +24,11 @@ function getImmediateChild(dropTarget, target) {
   return immediate;
 }
 
+/**
+ * Get the next sibling of the parameter element
+ * @param   el  {HTMLElement}
+ * @returns boolean
+ */
 function isEditable(el) {
   if (!el) { return false; } // no parents were editable
   if (el.contentEditable === 'false') { return false; } // stop the lookup
@@ -26,8 +36,18 @@ function isEditable(el) {
   return isEditable(getParent(el)); // contentEditable is set to 'inherit'
 }
 
+/**
+ * Get the next sibling of the parameter element
+ * @param   el  {HTMLElement}
+ * @returns boolean
+ */
 function isInput(el) { return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el); }
 
+/**
+ * Get the touch target of the event. Returns the original event if it can't be computed.
+ * @param   e  {TouchEvent}
+ * @returns Touch|TouchEvent
+ */
 function getEventHost(e) {
   // on touchend event, we have to use `e.changedTouches`
   // see http://stackoverflow.com/questions/7192563/touchend-event-properties
@@ -41,6 +61,12 @@ function getEventHost(e) {
   return e;
 }
 
+/**
+ * Gets the host co-ordinate for the event.
+ * @param   coord  {string}
+ * @param   e  {TouchEvent}
+ * @returns Touch|TouchEvent
+ */
 function getCoord(coord, e) {
   const host = getEventHost(e);
   const missMap = {
