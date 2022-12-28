@@ -5,3 +5,8 @@ Thumbs.db
 .idea/*
 test/test.html
 .parcel-cache/*
+
+# Playwright tests
+/test-results/
+/playwright-report/
+/playwright/.cache/

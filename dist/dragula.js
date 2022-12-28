@@ -1,13 +1,15 @@
-var $parcel$global =
-typeof globalThis !== 'undefined'
-  ? globalThis
-  : typeof self !== 'undefined'
-  ? self
-  : typeof window !== 'undefined'
-  ? window
-  : typeof global !== 'undefined'
-  ? global
-  : {};
+
+      var $parcel$global =
+        typeof globalThis !== 'undefined'
+          ? globalThis
+          : typeof self !== 'undefined'
+          ? self
+          : typeof window !== 'undefined'
+          ? window
+          : typeof global !== 'undefined'
+          ? global
+          : {};
+  
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
@@ -243,7 +245,7 @@ function $edf3723a0d74a2db$export$3ad8cee6b5b78fde(el, op, type, fn) {
         mousedown: "MSPointerDown",
         mousemove: "MSPointerMove"
     };
-    const { navigator: navigator  } = $parcel$global;
+    const { navigator: navigator } = $parcel$global;
     if (navigator.pointerEnabled) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, pointers[type], fn);
     else if (navigator.msPointerEnabled) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, microsoft[type], fn);
     else {
@@ -263,61 +265,38 @@ function $149915ec08b2d606$export$2e2bcd8739ae039(e) {
     if (e.which !== undefined && e.which !== 0) return e.which;
      // see https://github.com/bevacqua/dragula/issues/261
     if (e.buttons !== undefined) return e.buttons;
-    const { button: button  } = e;
+    const { button: button } = e;
     if (button !== undefined) // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
     // eslint-disable-next-line no-bitwise,no-nested-ternary
     return button & 1 ? 1 : button & 2 ? 3 : button & 4 ? 2 : 0;
 }
 
 
-var $1e24aa575bdc8126$exports = {};
-const $1e24aa575bdc8126$var$cache = {};
-const $1e24aa575bdc8126$var$start = "(?:^|\\s)";
-const $1e24aa575bdc8126$var$end = "(?:\\s|$)";
-function $1e24aa575bdc8126$var$lookupClass(className) {
-    let cached = $1e24aa575bdc8126$var$cache[className];
-    if (cached) cached.lastIndex = 0;
-    else {
-        cached = new RegExp($1e24aa575bdc8126$var$start + className + $1e24aa575bdc8126$var$end, "g");
-        $1e24aa575bdc8126$var$cache[className] = cached;
-    }
-    return cached;
-}
-/**
- * @param {HTMLElement} el
- * @param {string} className
- */ function $1e24aa575bdc8126$var$addClass(el, className) {
-    const current = el.className;
-    if (!current.length) // eslint-disable-next-line no-param-reassign
-    el.className = className;
-    else if (!$1e24aa575bdc8126$var$lookupClass(className).test(current)) // eslint-disable-next-line no-param-reassign
-    el.className += ` ${className}`;
-}
-/**
- * @param {HTMLElement} el
- * @param {string} className
- */ function $1e24aa575bdc8126$var$rmClass(el, className) {
-    // eslint-disable-next-line no-param-reassign
-    el.className = el.className.replace($1e24aa575bdc8126$var$lookupClass(className), " ").trim();
-}
-$1e24aa575bdc8126$exports = {
-    add: $1e24aa575bdc8126$var$addClass,
-    rm: $1e24aa575bdc8126$var$rmClass
-};
-
-
 const $7d816069de665cb9$var$doc = document;
-const { documentElement: $7d816069de665cb9$var$documentElement  } = $7d816069de665cb9$var$doc;
-function $7d816069de665cb9$var$getParent(el) {
+const { documentElement: $7d816069de665cb9$var$documentElement } = $7d816069de665cb9$var$doc;
+/**
+ * Get parent of the element. If parent is the root document then null is returned
+ * @param   el  {Node}
+ * @returns {ParentNode|null}
+ */ function $7d816069de665cb9$var$getParent(el) {
     return el.parentNode === $7d816069de665cb9$var$doc ? null : el.parentNode;
 }
-function $7d816069de665cb9$var$getImmediateChild(dropTarget, target) {
+/**
+ * Get parent of the element. If parent is the root document then null is returned
+ * @param   dropTarget  {Node}
+ * @param   target      {Node}
+ * @returns {ParentNode|null}
+ */ function $7d816069de665cb9$var$getImmediateChild(dropTarget, target) {
     let immediate = target;
     while(immediate !== dropTarget && $7d816069de665cb9$var$getParent(immediate) !== dropTarget)immediate = $7d816069de665cb9$var$getParent(immediate);
     if (immediate === $7d816069de665cb9$var$documentElement) return null;
     return immediate;
 }
-function $7d816069de665cb9$var$isEditable(el) {
+/**
+ * Get the next sibling of the parameter element
+ * @param   el  {HTMLElement}
+ * @returns boolean
+ */ function $7d816069de665cb9$var$isEditable(el) {
     if (!el) return false;
      // no parents were editable
     if (el.contentEditable === "false") return false;
@@ -326,10 +305,18 @@ function $7d816069de665cb9$var$isEditable(el) {
      // found a contentEditable element in the chain
     return $7d816069de665cb9$var$isEditable($7d816069de665cb9$var$getParent(el)); // contentEditable is set to 'inherit'
 }
-function $7d816069de665cb9$var$isInput(el) {
+/**
+ * Get the next sibling of the parameter element
+ * @param   el  {HTMLElement}
+ * @returns boolean
+ */ function $7d816069de665cb9$var$isInput(el) {
     return el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT" || $7d816069de665cb9$var$isEditable(el);
 }
-function $7d816069de665cb9$var$getEventHost(e) {
+/**
+ * Get the touch target of the event. Returns the original event if it can't be computed.
+ * @param   e  {TouchEvent}
+ * @returns Touch|TouchEvent
+ */ function $7d816069de665cb9$var$getEventHost(e) {
     // on touchend event, we have to use `e.changedTouches`
     // see http://stackoverflow.com/questions/7192563/touchend-event-properties
     // see https://github.com/bevacqua/dragula/issues/34
@@ -337,7 +324,12 @@ function $7d816069de665cb9$var$getEventHost(e) {
     if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0];
     return e;
 }
-function $7d816069de665cb9$var$getCoord(coord, e) {
+/**
+ * Gets the host co-ordinate for the event.
+ * @param   coord  {string}
+ * @param   e  {TouchEvent}
+ * @returns Touch|TouchEvent
+ */ function $7d816069de665cb9$var$getCoord(coord, e) {
     const host = $7d816069de665cb9$var$getEventHost(e);
     const missMap = {
         pageX: "clientX",
@@ -408,15 +400,41 @@ const $7d816069de665cb9$export$ba43bf67f3d48107 = {
 };
 class $7d816069de665cb9$export$2e2bcd8739ae039 {
     /**
+   * @param {Object} options - Options for dragula
+   */ constructor(options = {}){
+        this.options = {
+            ...$7d816069de665cb9$export$ba43bf67f3d48107,
+            ...options
+        };
+        // Ensure the drop target is init'd to be null from the start
+        this.lastDropTarget = null; // last container item was over
+        this.movementBindFn = this.startBecauseMouseMoved.bind(this);
+        this.preventGrabbedFn = this.preventGrabbed.bind(this);
+        this.grabFn = this.grab.bind(this);
+        this.releaseFn = this.release.bind(this);
+        this.dragFn = this.drag.bind(this);
+        this.drake = (0, (/*@__PURE__*/$parcel$interopDefault($9b8ce2f6bad20a8b$exports)))({
+            containers: this.options.containers,
+            start: this.manualStart.bind(this),
+            end: this.end.bind(this),
+            cancel: this.cancel.bind(this),
+            remove: this.remove.bind(this),
+            destroy: this.destroy.bind(this),
+            canMove: this.canMove.bind(this),
+            dragging: false
+        });
+        if (this.options.removeOnSpill === true) this.drake.on("over", this.spillOver.bind(this)).on("out", this.spillOut.bind(this));
+    }
+    /**
    * @param {HTMLElement }el
    */ // eslint-disable-next-line class-methods-use-this
     spillOver(el) {
-        $1e24aa575bdc8126$exports.rm(el, "gu-hide");
+        el.classList.remove("gu-hide");
     }
     /**
    * @param {HTMLElement }el
    */ spillOut(el) {
-        if (this.drake.dragging) $1e24aa575bdc8126$exports.add(el, "gu-hide");
+        if (this.drake.dragging) el.classList.add("gu-hide");
     }
     /**
    * Adds the event bindings to the dom
@@ -495,7 +513,7 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
             const elementBehindCursor = $7d816069de665cb9$var$doc.elementFromPoint(clientX, clientY);
             if ($7d816069de665cb9$var$isInput(elementBehindCursor)) return;
         }
-        const { grabbed: grabbed  } = this; // call to end() unsets _grabbed
+        const { grabbed: grabbed } = this; // call to end() unsets _grabbed
         this.eventualMovements(true);
         this.movements();
         this.end();
@@ -503,7 +521,8 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         const offset = $7d816069de665cb9$var$getOffset(this.item);
         this.offsetX = $7d816069de665cb9$var$getCoord("pageX", e) - offset.left;
         this.offsetY = $7d816069de665cb9$var$getCoord("pageY", e) - offset.top;
-        $1e24aa575bdc8126$exports.add(this.copy || this.item, "gu-transit");
+        const item = this.copy || this.item;
+        item.classList.add("gu-transit");
         this.renderMirrorImage();
         this.drag(e);
     }
@@ -552,16 +571,16 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         this.mirror = this.item.cloneNode(true);
         this.mirror.style.width = `${$7d816069de665cb9$var$getRectWidth(rect)}px`;
         this.mirror.style.height = `${$7d816069de665cb9$var$getRectHeight(rect)}px`;
-        $1e24aa575bdc8126$exports.rm(this.mirror, "gu-transit");
-        $1e24aa575bdc8126$exports.add(this.mirror, "gu-mirror");
+        this.mirror.classList.remove("gu-transit");
+        this.mirror.classList.add("gu-mirror");
         this.options.mirrorContainer.appendChild(this.mirror);
         (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, "add", "mousemove", this.dragFn);
-        $1e24aa575bdc8126$exports.add(this.options.mirrorContainer, "gu-unselectable");
+        this.options.mirrorContainer.classList.add("gu-unselectable");
         this.drake.emit("cloned", this.mirror, this.item, "mirror");
     }
     removeMirrorImage() {
         if (this.mirror) {
-            $1e24aa575bdc8126$exports.rm(this.options.mirrorContainer, "gu-unselectable");
+            this.options.mirrorContainer.classList.remove("gu-unselectable");
             (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, "remove", "mousemove", this.dragFn);
             $7d816069de665cb9$var$getParent(this.mirror).removeChild(this.mirror);
             this.mirror = null;
@@ -603,13 +622,12 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         const item = this.copy || this.item;
         this.ungrab();
         this.removeMirrorImage();
-        if (item) $1e24aa575bdc8126$exports.rm(item, "gu-transit");
-        if (this.renderTimer) clearTimeout(this.renderTimer);
+        if (item) item.classList.remove("gu-transit");
         this.drake.dragging = false;
         if (this.lastDropTarget) this.drake.emit("out", item, this.lastDropTarget, this.source);
         this.drake.emit("dragend", item);
         // eslint-disable-next-line max-len,no-multi-assign
-        this.source = this.item = this.copy = this.initialSibling = this.currentSibling = this.renderTimer = this.lastDropTarget = null;
+        this.source = this.item = this.copy = this.initialSibling = this.currentSibling = this.lastDropTarget = null;
     }
     isCopy(item, container) {
         return typeof this.options.copy === "boolean" ? this.options.copy : this.options.copy(item, container);
@@ -645,7 +663,7 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         }
         function outside() {
             // slower, but able to figure out any position
-            const { children: children  } = dropTarget;
+            const { children: children } = dropTarget;
             const len = children.length;
             let el;
             let rect;
@@ -714,32 +732,6 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
     manualStart(item) {
         const context = this.canStart(item);
         if (context) this.start(context);
-    }
-    /**
-   * @param {Object} options - Options for dragula
-   */ constructor(options = {}){
-        this.options = {
-            ...$7d816069de665cb9$export$ba43bf67f3d48107,
-            ...options
-        };
-        // Ensure the drop target is init'd to be null from the start
-        this.lastDropTarget = null; // last container item was over
-        this.movementBindFn = this.startBecauseMouseMoved.bind(this);
-        this.preventGrabbedFn = this.preventGrabbed.bind(this);
-        this.grabFn = this.grab.bind(this);
-        this.releaseFn = this.release.bind(this);
-        this.dragFn = this.drag.bind(this);
-        this.drake = (0, (/*@__PURE__*/$parcel$interopDefault($9b8ce2f6bad20a8b$exports)))({
-            containers: this.options.containers,
-            start: this.manualStart.bind(this),
-            end: this.end.bind(this),
-            cancel: this.cancel.bind(this),
-            remove: this.remove.bind(this),
-            destroy: this.destroy.bind(this),
-            canMove: this.canMove.bind(this),
-            dragging: false
-        });
-        if (this.options.removeOnSpill === true) this.drake.on("over", this.spillOver.bind(this)).on("out", this.spillOut.bind(this));
     }
 }
 

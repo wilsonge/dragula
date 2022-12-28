@@ -17,6 +17,8 @@
   "ignorePatterns": [
     "dist/*",
     "example/*",
-    "test/*"
+    "test/*",
+    "playwright.config.js",
+    "test-legacy/*"
   ]
 }

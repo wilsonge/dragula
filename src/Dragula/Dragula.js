@@ -1,7 +1,6 @@
 import emitter from 'contra/emitter';
 import { touchy, clicky } from './Events';
 import whichMouseButton from './Mouse';
-import * as classes from '../classes';
 
 const doc = document;
 const { documentElement } = doc;
@@ -13,6 +12,12 @@ const { documentElement } = doc;
  */
 function getParent(el) { return el.parentNode === doc ? null : el.parentNode; }
 
+/**
+ * Get parent of the element. If parent is the root document then null is returned
+ * @param   dropTarget  {Node}
+ * @param   target      {Node}
+ * @returns {ParentNode|null}
+ */
 function getImmediateChild(dropTarget, target) {
   let immediate = target;
   while (immediate !== dropTarget && getParent(immediate) !== dropTarget) {
@@ -173,7 +178,6 @@ export const defaultOptions = {
  * @property {Element}  initialSibling    The reference sibling when grabbed
  * @property {Element}  currentSibling    The reference sibling now
  * @property {Node}  copy    The item used for copying
- * @property {}  renderTimer    The timer for setTimeout renderMirrorImage
  * @property {?Object}  grabbed    Holds mousedown context until first mousemove
  */
 export default class Dragula {
@@ -215,14 +219,14 @@ export default class Dragula {
    */
   // eslint-disable-next-line class-methods-use-this
   spillOver(el) {
-    classes.rm(el, 'gu-hide');
+    el.classList.remove('gu-hide');
   }
 
   /**
    * @param {HTMLElement }el
    */
   spillOut(el) {
-    if (this.drake.dragging) { classes.add(el, 'gu-hide'); }
+    if (this.drake.dragging) { el.classList.add('gu-hide'); }
   }
 
   /**
@@ -351,7 +355,8 @@ export default class Dragula {
     this.offsetX = getCoord('pageX', e) - offset.left;
     this.offsetY = getCoord('pageY', e) - offset.top;
 
-    classes.add(this.copy || this.item, 'gu-transit');
+    const item = this.copy || this.item;
+    item.classList.add('gu-transit');
     this.renderMirrorImage();
     this.drag(e);
   }
@@ -418,17 +423,17 @@ export default class Dragula {
     this.mirror = this.item.cloneNode(true);
     this.mirror.style.width = `${getRectWidth(rect)}px`;
     this.mirror.style.height = `${getRectHeight(rect)}px`;
-    classes.rm(this.mirror, 'gu-transit');
-    classes.add(this.mirror, 'gu-mirror');
+    this.mirror.classList.remove('gu-transit');
+    this.mirror.classList.add('gu-mirror');
     this.options.mirrorContainer.appendChild(this.mirror);
     touchy(documentElement, 'add', 'mousemove', this.dragFn);
-    classes.add(this.options.mirrorContainer, 'gu-unselectable');
+    this.options.mirrorContainer.classList.add('gu-unselectable');
     this.drake.emit('cloned', this.mirror, this.item, 'mirror');
   }
 
   removeMirrorImage() {
     if (this.mirror) {
-      classes.rm(this.options.mirrorContainer, 'gu-unselectable');
+      this.options.mirrorContainer.classList.remove('gu-unselectable');
       touchy(documentElement, 'remove', 'mousemove', this.dragFn);
       getParent(this.mirror).removeChild(this.mirror);
       this.mirror = null;
@@ -488,10 +493,7 @@ export default class Dragula {
     this.ungrab();
     this.removeMirrorImage();
     if (item) {
-      classes.rm(item, 'gu-transit');
-    }
-    if (this.renderTimer) {
-      clearTimeout(this.renderTimer);
+      item.classList.remove('gu-transit');
     }
     this.drake.dragging = false;
     if (this.lastDropTarget) {
@@ -499,7 +501,7 @@ export default class Dragula {
     }
     this.drake.emit('dragend', item);
     // eslint-disable-next-line max-len,no-multi-assign
-    this.source = this.item = this.copy = this.initialSibling = this.currentSibling = this.renderTimer = this.lastDropTarget = null;
+    this.source = this.item = this.copy = this.initialSibling = this.currentSibling = this.lastDropTarget = null;
   }
 
   isCopy(item, container) {

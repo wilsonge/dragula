@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../dist/dragula.css" type="text/css"/>
+    <style>
+      #container div {
+        padding: 10px;
+        margin: 10px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Testing Mirror Container Parameter</h1>
+    <div id="mirrorContainer"></div>
+    <div id="container">
+      <div><em>the force is <strong>with this one</strong></em></div>
+    </div>
+    <script src="../../dist/dragula.js"></script>
+    <script>
+      const drake = dragula([document.getElementById('container')], {
+        mirrorContainer: document.getElementById('mirrorContainer')
+      });
+    </script>
+  </body>
+</html>

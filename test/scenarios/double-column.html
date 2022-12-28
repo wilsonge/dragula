@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../dist/dragula.css" type="text/css"/>
+    <style>
+      .parent-container {
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 2rem;
+      }
+      #container1, #container2 {
+        border: 1px solid green;
+      }
+      #container1 div, #container2 div {
+        padding: 10px;
+        margin: 10px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Testing Primary Functionality</h1>
+    <div class="parent-container">
+      <div id="container1">
+        <div id="item1">You can move these elements between these two containers</div>
+        <div id="item2">Moving them anywhere else isn't quite possible</div>
+      </div>
+      <div id="container2">
+      </div>
+    </div>
+    <script src="../../dist/dragula.js"></script>
+    <script>
+      const drake = dragula([document.getElementById('container1'), document.getElementById('container2')]);
+    </script>
+  </body>
+</html>

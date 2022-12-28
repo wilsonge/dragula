@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../dist/dragula.css" type="text/css"/>
+    <style>
+      #container div {
+        padding: 10px;
+        margin: 10px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Testing Primary Functionality</h1>
+    <div id="container">
+      <div id="item1">You can move these elements between these two containers</div>
+      <div id="item2">Moving them anywhere else isn't quite possible</div>
+      <div id="item3">But here is just fine!</div>
+    </div>
+    <script src="../../dist/dragula.js"></script>
+    <script>
+      const drake = dragula([document.getElementById('container')]);
+    </script>
+  </body>
+</html>

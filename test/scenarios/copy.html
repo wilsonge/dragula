@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../dist/dragula.css" type="text/css"/>
+    <style>
+      #container div {
+        padding: 10px;
+        margin: 10px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Testing Copy Function</h1>
+    <div id="container" class="contains">
+      <div class="copyable"><em>the force is <strong>with this one</strong></em></div>
+    </div>
+    <script src="../../dist/dragula.js"></script>
+    <script>
+      let timesChecked = 0;
+      let check1Test = false;
+      let check2Test = false;
+      const drake = dragula([document.getElementById('container')], {
+        copy: (el, source) => {
+          check1Test = el.className === 'copyable';
+          check2Test = source.className === 'contains';
+          timesChecked++;
+          return true;
+        }
+      });
+    </script>
+  </body>
+</html>

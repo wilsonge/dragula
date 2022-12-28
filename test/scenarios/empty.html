@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../dist/dragula.css" type="text/css"/>
+    <style>
+      #container div {
+        padding: 10px;
+        margin: 10px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Testing Primary Functionality</h1>
+    <script src="../../dist/dragula.js"></script>
+    <script>
+      let drake;
+
+      function initDragula(containers, opts) {
+        let dragulaOpts = {};
+        if (opts && opts.invalid) {
+          dragulaOpts['invalid'] = () => { return true; }
+        }
+        if (opts && opts.moves) {
+          dragulaOpts['moves'] = () => { return false; }
+        }
+        if (opts && opts.containers) {
+          dragulaOpts['containers'] = opts.containers;
+        }
+        if (dragulaOpts === {}) {
+          dragulaOpts = undefined;
+        }
+        drake = dragula(containers, dragulaOpts);
+      }
+    </script>
+  </body>
+</html>

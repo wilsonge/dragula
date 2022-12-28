@@ -6,12 +6,12 @@ test('drake can be instantiated without throwing', function (t) {
   t.doesNotThrow(drakeFactory, 'calling dragula() without arguments does not throw');
   t.end();
   function drakeFactory () {
-    return window.dragula();
+    return dragula();
   }
 });
 
 test('drake has expected api properties', function (t) {
-  var drake = window.dragula();
+  var drake = dragula();
   t.ok(drake, 'drake is not null');
   t.equal(typeof drake, 'object', 'drake is an object');
   t.ok(Array.isArray(drake.containers), 'drake.containers is an array');
@@ -22,5 +22,20 @@ test('drake has expected api properties', function (t) {
   t.equal(typeof drake.destroy, 'function', 'drake.destroy is a method');
   t.equal(typeof drake.dragging, 'boolean', 'drake.dragging is a boolean');
   t.equal(drake.dragging, false, 'drake.dragging is initialized as false');
+  t.end();
+});
+
+test('drake has sensible default options', function (t) {
+  var options = {};
+  dragula(options);
+  t.equal(typeof options.moves, 'function', 'options.moves defaults to a method');
+  t.equal(typeof options.accepts, 'function', 'options.accepts defaults to a method');
+  t.equal(typeof options.invalid, 'function', 'options.invalid defaults to a method');
+  t.equal(typeof options.isContainer, 'function', 'options.isContainer defaults to a method');
+  t.equal(options.copy, false, 'options.copy defaults to false');
+  t.equal(options.revertOnSpill, false, 'options.revertOnSpill defaults to false');
+  t.equal(options.removeOnSpill, false, 'options.removeOnSpill defaults to false');
+  t.equal(options.direction, 'vertical', 'options.direction defaults to \'vertical\'');
+  t.equal(options.mirrorContainer, document.body, 'options.mirrorContainer defaults to an document.body');
   t.end();
 });
