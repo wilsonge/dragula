@@ -18,7 +18,7 @@ export function touchy(el, op, type, fn) {
   };
   const { navigator } = global;
 
-  if (navigator.pointerEnabled) {
+  if (navigator.pointerEnabled || 'PointerEvent' in global) {
     crossvent[op](el, pointers[type], fn);
   } else if (navigator.msPointerEnabled) {
     crossvent[op](el, microsoft[type], fn);

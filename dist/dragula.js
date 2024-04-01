@@ -246,7 +246,7 @@ function $edf3723a0d74a2db$export$3ad8cee6b5b78fde(el, op, type, fn) {
         mousemove: "MSPointerMove"
     };
     const { navigator: navigator } = $parcel$global;
-    if (navigator.pointerEnabled) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, pointers[type], fn);
+    if (navigator.pointerEnabled || "PointerEvent" in $parcel$global) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, pointers[type], fn);
     else if (navigator.msPointerEnabled) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, microsoft[type], fn);
     else {
         (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, touch[type], fn);
