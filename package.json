@@ -30,8 +30,7 @@
   "homepage": "https://github.com/bevacqua/dragula",
   "dependencies": {
     "@swc/helpers": "^0.4.14",
-    "contra": "1.9.4",
-    "crossvent": "1.5.5"
+    "contra": "1.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",

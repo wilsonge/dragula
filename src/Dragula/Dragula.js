@@ -1,5 +1,4 @@
 import emitter from 'contra/emitter';
-import { touchy, clicky } from './Events';
 import whichMouseButton from './Mouse';
 
 const doc = document;
@@ -234,9 +233,13 @@ export default class Dragula {
    * @param {boolean} remove
    */
   events(remove = false) {
-    const op = remove ? 'remove' : 'add';
-    touchy(documentElement, op, 'mousedown', this.grabFn);
-    touchy(documentElement, op, 'mouseup', this.releaseFn);
+    if (remove) {
+      documentElement.removeEventListener('pointerdown', this.grabFn);
+      documentElement.removeEventListener('pointerup', this.releaseFn);
+    } else {
+      documentElement.addEventListener('pointerdown', this.grabFn);
+      documentElement.addEventListener('pointerup', this.releaseFn);
+    }
   }
 
   /**
@@ -249,8 +252,11 @@ export default class Dragula {
   }
 
   movements(remove) {
-    const op = remove ? 'remove' : 'add';
-    clicky(documentElement, op, this.preventGrabbedFn);
+    if (remove) {
+      documentElement.removeEventListener('click', this.preventGrabbedFn);
+    } else {
+      documentElement.addEventListener('click', this.preventGrabbedFn);
+    }
   }
 
   getDrake() {
@@ -259,7 +265,7 @@ export default class Dragula {
 
   /**
    * Called when picking up an item to drag
-   * @param {MouseEvent} e - The event
+   * @param {PointerEvent} e - The event
    */
   grab(e) {
     this.moveX = e.clientX;
@@ -314,8 +320,11 @@ export default class Dragula {
   }
 
   eventualMovements(remove) {
-    const op = remove ? 'remove' : 'add';
-    touchy(documentElement, op, 'mousemove', this.movementBindFn);
+    if (remove) {
+      documentElement.removeEventListener('pointermove', this.movementBindFn);
+    } else {
+      documentElement.addEventListener('pointermove', this.movementBindFn);
+    }
   }
 
   startBecauseMouseMoved(e) {
@@ -426,7 +435,7 @@ export default class Dragula {
     this.mirror.classList.remove('gu-transit');
     this.mirror.classList.add('gu-mirror');
     this.options.mirrorContainer.appendChild(this.mirror);
-    touchy(documentElement, 'add', 'mousemove', this.dragFn);
+    documentElement.addEventListener('pointermove', this.dragFn);
     this.options.mirrorContainer.classList.add('gu-unselectable');
     this.drake.emit('cloned', this.mirror, this.item, 'mirror');
   }
@@ -434,7 +443,7 @@ export default class Dragula {
   removeMirrorImage() {
     if (this.mirror) {
       this.options.mirrorContainer.classList.remove('gu-unselectable');
-      touchy(documentElement, 'remove', 'mousemove', this.dragFn);
+      documentElement.removeEventListener('pointermove', this.dragFn);
       getParent(this.mirror).removeChild(this.mirror);
       this.mirror = null;
     }

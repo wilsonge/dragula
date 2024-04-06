@@ -91,175 +91,10 @@ $9b8ce2f6bad20a8b$exports = function emitter(thing, options) {
 };
 
 
-var $c168dbdd16482ca8$exports = {};
-"use strict";
-var $4e130eb259c0982f$exports = {};
-var $4e130eb259c0982f$var$NativeCustomEvent = $parcel$global.CustomEvent;
-function $4e130eb259c0982f$var$useNative() {
-    try {
-        var p = new $4e130eb259c0982f$var$NativeCustomEvent("cat", {
-            detail: {
-                foo: "bar"
-            }
-        });
-        return "cat" === p.type && "bar" === p.detail.foo;
-    } catch (e) {}
-    return false;
-}
 /**
- * Cross-browser `CustomEvent` constructor.
- *
- * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent.CustomEvent
- *
- * @public
- */ $4e130eb259c0982f$exports = $4e130eb259c0982f$var$useNative() ? $4e130eb259c0982f$var$NativeCustomEvent : // IE >= 9
-"undefined" !== typeof document && "function" === typeof document.createEvent ? function CustomEvent(type, params) {
-    var e = document.createEvent("CustomEvent");
-    if (params) e.initCustomEvent(type, params.bubbles, params.cancelable, params.detail);
-    else e.initCustomEvent(type, false, false, void 0);
-    return e;
-} : // IE <= 8
-function CustomEvent(type, params) {
-    var e = document.createEventObject();
-    e.type = type;
-    if (params) {
-        e.bubbles = Boolean(params.bubbles);
-        e.cancelable = Boolean(params.cancelable);
-        e.detail = params.detail;
-    } else {
-        e.bubbles = false;
-        e.cancelable = false;
-        e.detail = void 0;
-    }
-    return e;
-};
-
-
-var $4bf0433a99b414fd$exports = {};
-"use strict";
-var $4bf0433a99b414fd$var$eventmap = [];
-var $4bf0433a99b414fd$var$eventname = "";
-var $4bf0433a99b414fd$var$ron = /^on/;
-for($4bf0433a99b414fd$var$eventname in $parcel$global)if ($4bf0433a99b414fd$var$ron.test($4bf0433a99b414fd$var$eventname)) $4bf0433a99b414fd$var$eventmap.push($4bf0433a99b414fd$var$eventname.slice(2));
-$4bf0433a99b414fd$exports = $4bf0433a99b414fd$var$eventmap;
-
-
-var $c168dbdd16482ca8$var$doc = $parcel$global.document;
-var $c168dbdd16482ca8$var$addEvent = $c168dbdd16482ca8$var$addEventEasy;
-var $c168dbdd16482ca8$var$removeEvent = $c168dbdd16482ca8$var$removeEventEasy;
-var $c168dbdd16482ca8$var$hardCache = [];
-if (!$parcel$global.addEventListener) {
-    $c168dbdd16482ca8$var$addEvent = $c168dbdd16482ca8$var$addEventHard;
-    $c168dbdd16482ca8$var$removeEvent = $c168dbdd16482ca8$var$removeEventHard;
-}
-$c168dbdd16482ca8$exports = {
-    add: $c168dbdd16482ca8$var$addEvent,
-    remove: $c168dbdd16482ca8$var$removeEvent,
-    fabricate: $c168dbdd16482ca8$var$fabricateEvent
-};
-function $c168dbdd16482ca8$var$addEventEasy(el, type, fn, capturing) {
-    return el.addEventListener(type, fn, capturing);
-}
-function $c168dbdd16482ca8$var$addEventHard(el, type, fn) {
-    return el.attachEvent("on" + type, $c168dbdd16482ca8$var$wrap(el, type, fn));
-}
-function $c168dbdd16482ca8$var$removeEventEasy(el, type, fn, capturing) {
-    return el.removeEventListener(type, fn, capturing);
-}
-function $c168dbdd16482ca8$var$removeEventHard(el, type, fn) {
-    var listener = $c168dbdd16482ca8$var$unwrap(el, type, fn);
-    if (listener) return el.detachEvent("on" + type, listener);
-}
-function $c168dbdd16482ca8$var$fabricateEvent(el, type, model) {
-    var e = $4bf0433a99b414fd$exports.indexOf(type) === -1 ? makeCustomEvent() : makeClassicEvent();
-    if (el.dispatchEvent) el.dispatchEvent(e);
-    else el.fireEvent("on" + type, e);
-    function makeClassicEvent() {
-        var e;
-        if ($c168dbdd16482ca8$var$doc.createEvent) {
-            e = $c168dbdd16482ca8$var$doc.createEvent("Event");
-            e.initEvent(type, true, true);
-        } else if ($c168dbdd16482ca8$var$doc.createEventObject) e = $c168dbdd16482ca8$var$doc.createEventObject();
-        return e;
-    }
-    function makeCustomEvent() {
-        return new $4e130eb259c0982f$exports(type, {
-            detail: model
-        });
-    }
-}
-function $c168dbdd16482ca8$var$wrapperFactory(el, type, fn) {
-    return function wrapper(originalEvent) {
-        var e = originalEvent || $parcel$global.event;
-        e.target = e.target || e.srcElement;
-        e.preventDefault = e.preventDefault || function preventDefault() {
-            e.returnValue = false;
-        };
-        e.stopPropagation = e.stopPropagation || function stopPropagation() {
-            e.cancelBubble = true;
-        };
-        e.which = e.which || e.keyCode;
-        fn.call(el, e);
-    };
-}
-function $c168dbdd16482ca8$var$wrap(el, type, fn) {
-    var wrapper = $c168dbdd16482ca8$var$unwrap(el, type, fn) || $c168dbdd16482ca8$var$wrapperFactory(el, type, fn);
-    $c168dbdd16482ca8$var$hardCache.push({
-        wrapper: wrapper,
-        element: el,
-        type: type,
-        fn: fn
-    });
-    return wrapper;
-}
-function $c168dbdd16482ca8$var$unwrap(el, type, fn) {
-    var i = $c168dbdd16482ca8$var$find(el, type, fn);
-    if (i) {
-        var wrapper = $c168dbdd16482ca8$var$hardCache[i].wrapper;
-        $c168dbdd16482ca8$var$hardCache.splice(i, 1); // free up a tad of memory
-        return wrapper;
-    }
-}
-function $c168dbdd16482ca8$var$find(el, type, fn) {
-    var i, item;
-    for(i = 0; i < $c168dbdd16482ca8$var$hardCache.length; i++){
-        item = $c168dbdd16482ca8$var$hardCache[i];
-        if (item.element === el && item.type === type && item.fn === fn) return i;
-    }
-}
-
-
-function $edf3723a0d74a2db$export$3ad8cee6b5b78fde(el, op, type, fn) {
-    const touch = {
-        mouseup: "touchend",
-        mousedown: "touchstart",
-        mousemove: "touchmove"
-    };
-    const pointers = {
-        mouseup: "pointerup",
-        mousedown: "pointerdown",
-        mousemove: "pointermove"
-    };
-    const microsoft = {
-        mouseup: "MSPointerUp",
-        mousedown: "MSPointerDown",
-        mousemove: "MSPointerMove"
-    };
-    const { navigator: navigator } = $parcel$global;
-    if (navigator.pointerEnabled || "PointerEvent" in $parcel$global) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, pointers[type], fn);
-    else if (navigator.msPointerEnabled) (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, microsoft[type], fn);
-    else {
-        (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, touch[type], fn);
-        (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, type, fn);
-    }
-}
-function $edf3723a0d74a2db$export$46c2327ad39dd7a4(el, op, fn) {
-    (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, "selectstart", fn); // IE8
-    (0, (/*@__PURE__*/$parcel$interopDefault($c168dbdd16482ca8$exports)))[op](el, "click", fn);
-}
-
-
-// eslint-disable-next-line consistent-return
+ * Checks what mouse button or touch gesture was used.
+ * @param {PointerEvent} e - The event
+ */ // eslint-disable-next-line consistent-return
 function $149915ec08b2d606$export$2e2bcd8739ae039(e) {
     if (e.touches !== undefined) return e.touches.length;
     if (e.which !== undefined && e.which !== 0) return e.which;
@@ -440,9 +275,13 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
    * Adds the event bindings to the dom
    * @param {boolean} remove
    */ events(remove = false) {
-        const op = remove ? "remove" : "add";
-        (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, op, "mousedown", this.grabFn);
-        (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, op, "mouseup", this.releaseFn);
+        if (remove) {
+            $7d816069de665cb9$var$documentElement.removeEventListener("pointerdown", this.grabFn);
+            $7d816069de665cb9$var$documentElement.removeEventListener("pointerup", this.releaseFn);
+        } else {
+            $7d816069de665cb9$var$documentElement.addEventListener("pointerdown", this.grabFn);
+            $7d816069de665cb9$var$documentElement.addEventListener("pointerup", this.releaseFn);
+        }
     }
     /**
    * @param {Event} e - Event on grabbing an item
@@ -450,15 +289,15 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         if (this.grabbed) e.preventDefault();
     }
     movements(remove) {
-        const op = remove ? "remove" : "add";
-        (0, $edf3723a0d74a2db$export$46c2327ad39dd7a4)($7d816069de665cb9$var$documentElement, op, this.preventGrabbedFn);
+        if (remove) $7d816069de665cb9$var$documentElement.removeEventListener("click", this.preventGrabbedFn);
+        else $7d816069de665cb9$var$documentElement.addEventListener("click", this.preventGrabbedFn);
     }
     getDrake() {
         return this.drake;
     }
     /**
    * Called when picking up an item to drag
-   * @param {MouseEvent} e - The event
+   * @param {PointerEvent} e - The event
    */ grab(e) {
         this.moveX = e.clientX;
         this.moveY = e.clientY;
@@ -494,8 +333,8 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         else this.cancel();
     }
     eventualMovements(remove) {
-        const op = remove ? "remove" : "add";
-        (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, op, "mousemove", this.movementBindFn);
+        if (remove) $7d816069de665cb9$var$documentElement.removeEventListener("pointermove", this.movementBindFn);
+        else $7d816069de665cb9$var$documentElement.addEventListener("pointermove", this.movementBindFn);
     }
     startBecauseMouseMoved(e) {
         if (!this.grabbed) return;
@@ -574,14 +413,14 @@ class $7d816069de665cb9$export$2e2bcd8739ae039 {
         this.mirror.classList.remove("gu-transit");
         this.mirror.classList.add("gu-mirror");
         this.options.mirrorContainer.appendChild(this.mirror);
-        (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, "add", "mousemove", this.dragFn);
+        $7d816069de665cb9$var$documentElement.addEventListener("pointermove", this.dragFn);
         this.options.mirrorContainer.classList.add("gu-unselectable");
         this.drake.emit("cloned", this.mirror, this.item, "mirror");
     }
     removeMirrorImage() {
         if (this.mirror) {
             this.options.mirrorContainer.classList.remove("gu-unselectable");
-            (0, $edf3723a0d74a2db$export$3ad8cee6b5b78fde)($7d816069de665cb9$var$documentElement, "remove", "mousemove", this.dragFn);
+            $7d816069de665cb9$var$documentElement.removeEventListener("pointermove", this.dragFn);
             $7d816069de665cb9$var$getParent(this.mirror).removeChild(this.mirror);
             this.mirror = null;
         }

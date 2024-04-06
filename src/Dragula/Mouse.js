@@ -1,3 +1,7 @@
+/**
+ * Checks what mouse button or touch gesture was used.
+ * @param {PointerEvent} e - The event
+ */
 // eslint-disable-next-line consistent-return
 export default function whichMouseButton(e) {
   if (e.touches !== undefined) { return e.touches.length; }
